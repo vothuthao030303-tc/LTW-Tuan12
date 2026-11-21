@@ -25,7 +25,7 @@ jobs:
           protocol: ftp
           local-dir: ./
           server-dir: ${{ secrets.FTP_TARGET_DIR }}
-          dry-run: true
+          dry-run: false
           exclude: |
             **/.git*
             **/.git*/**
