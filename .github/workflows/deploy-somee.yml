@@ -1,0 +1,41 @@
+
+name: Deploy LTW-Tuan12 to Somee
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore ./RealEstateWeb/RealEstateWeb.csproj
+
+      - name: Build
+        run: dotnet build ./RealEstateWeb/RealEstateWeb.csproj -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./RealEstateWeb/RealEstateWeb.csproj -c Release -f net8.0 --no-build -o ./publish
+
+      - name: Deploy to Somee via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SOMEE_FTP_HOST }}
+          username: ${{ secrets.SOMEE_FTP_USERNAME }}
+          password: ${{ secrets.SOMEE_FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./publish/
+          server-dir: ${{ secrets.SOMEE_FTP_TARGET }}
