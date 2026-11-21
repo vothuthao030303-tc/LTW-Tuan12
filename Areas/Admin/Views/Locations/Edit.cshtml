@@ -1,0 +1,14 @@
+@model RealEstateWeb.Models.Location
+@{
+    ViewData["Title"] = "Sửa khu vực";
+}
+<div class="rh-page-head"><h3>Sửa khu vực</h3></div>
+<div class="rh-card">
+    <p>Mã khu vực: <strong>@Model.LocationId</strong></p>
+    <form asp-action="Edit" asp-route-id="@Model.LocationId" method="post">
+        <input asp-for="LocationId" type="hidden" />
+        <partial name="_Form" model="Model" />
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        <a asp-action="Index" class="btn btn-default">Quay lại danh sách</a>
+    </form>
+</div>

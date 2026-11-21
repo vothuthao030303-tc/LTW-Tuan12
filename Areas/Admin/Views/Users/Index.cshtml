@@ -1,0 +1,18 @@
+@model IEnumerable<RealEstateWeb.Models.User>
+@{ ViewData["Title"] = "Quản lý tài khoản"; }
+<div class="rh-page-head"><h3>Quản lý tài khoản</h3><a asp-action="Create" class="btn btn-primary">Thêm tài khoản</a></div>
+<div class="rh-card">
+    <form method="get"><input name="keyword" value="@ViewBag.Keyword" placeholder="Họ tên hoặc email" /><button class="btn btn-primary">Tìm kiếm</button></form>
+    <div class="table-responsive"><table class="table">
+        <thead><tr><th>Mã</th><th>Họ tên</th><th>Email</th><th>Điện thoại</th><th>Quyền</th><th>Trạng thái</th><th>Ngày tạo</th><th>Thao tác</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td>@item.UserId</td><td>@item.FullName</td><td>@item.Email</td><td>@item.Phone</td><td>@item.Role</td><td><partial name="~/Views/Shared/_StatusBadge.cshtml" model="item.Status" /></td><td>@item.CreatedAt.ToString("dd/MM/yyyy")</td><td>
+                <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-default">Sửa</a>
+                <form asp-action="Delete" asp-route-id="@item.UserId" method="post" style="display:inline" onsubmit="return confirm('Xóa tài khoản này?');"><button class="btn btn-danger">Xóa</button></form>
+            </td></tr>
+        }
+        </tbody>
+    </table></div>
+</div>

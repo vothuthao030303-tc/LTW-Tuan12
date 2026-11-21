@@ -1,0 +1,10 @@
+@model RealEstateWeb.Models.Property
+@{ ViewData["Title"] = "Sửa bất động sản"; }
+<h1>Sửa bất động sản</h1>
+<p>Mã bất động sản: @Model.PropertyId</p>
+<form asp-action="Edit" asp-route-id="@Model.PropertyId" method="post" enctype="multipart/form-data" class="edit-form">
+    <input type="hidden" asp-for="PropertyId" />
+    @if (!string.IsNullOrWhiteSpace(Model.MainImage)) { <img class="preview-image" src="@Model.MainImage" alt="Ảnh hiện tại" /><p><small>Không chọn ảnh mới để giữ ảnh hiện tại.</small></p> }
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Cập nhật</button> <a asp-action="Index">Quay lại danh sách</a>
+</form>

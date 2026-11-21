@@ -1,0 +1,22 @@
+@model RealEstateWeb.Models.Location
+@{
+    ViewData["Title"] = "Xác nhận xóa khu vực";
+}
+<div class="rh-page-head"><h3>Xác nhận xóa khu vực</h3></div>
+<div class="rh-card">
+    <partial name="_Summary" model="Model" />
+    @if (Model.Properties.Count > 0)
+    {
+        <div class="alert alert-warning">Không thể xóa vì khu vực đang có bất động sản. Hãy chuyển hoặc xóa các tin liên quan trước.</div>
+        <a asp-action="Details" asp-route-id="@Model.LocationId" class="btn btn-primary">Xem các tin liên quan</a>
+    }
+    else
+    {
+        <p>Bạn có chắc muốn xóa khu vực này?</p>
+        <form asp-action="Delete" asp-route-id="@Model.LocationId" method="post" class="rh-location-delete">
+            <input type="hidden" name="id" value="@Model.LocationId" />
+            <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+        </form>
+    }
+    <a asp-action="Index" class="btn btn-default">Quay lại danh sách</a>
+</div>

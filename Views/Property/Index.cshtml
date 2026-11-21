@@ -1,0 +1,32 @@
+@model RealEstateWeb.ViewModels.PropertyListViewModel
+@{
+    ViewData["Title"] = "Khám phá bất động sản";
+}
+<div class="container">
+    <div class="page-heading"><div class="breadcrumb"><a asp-controller="Home" asp-action="Index">Trang chủ</a> / Bất động sản</div><span class="eyebrow">Không gian cho mỗi hành trình</span><h1>Khám phá bất động sản</h1><p>Thu hẹp lựa chọn. Tìm đúng không gian bạn đang cần.</p></div>
+    <form class="rh-filter" asp-action="Index" method="get">
+        <div><label for="keyword">Từ khóa</label><input id="keyword" name="keyword" value="@Model.Keyword" placeholder="Tiêu đề, địa chỉ..." /></div>
+        <div><label for="typeId">Loại hình</label><select id="typeId" name="typeId"><option value="">Tất cả loại hình</option>@foreach (var type in Model.Types) { <option value="@type.PropertyTypeId" selected="@(Model.TypeId == type.PropertyTypeId)">@type.TypeName</option> }</select></div>
+        <div><label for="locationId">Khu vực</label><select id="locationId" name="locationId"><option value="">Tất cả khu vực</option>@foreach (var location in Model.Locations) { <option value="@location.LocationId" selected="@(Model.LocationId == location.LocationId)">@location.District</option> }</select></div>
+        <div><label for="minPrice">Giá từ (đ)</label><input id="minPrice" type="number" min="0" name="minPrice" value="@Model.MinPrice" placeholder="Không giới hạn" /></div>
+        <div><label for="maxPrice">Giá đến (đ)</label><input id="maxPrice" type="number" min="0" name="maxPrice" value="@Model.MaxPrice" placeholder="Không giới hạn" /></div>
+        <button type="submit" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-search" /></svg>Lọc</button>
+    </form>
+    <div class="list-heading"><h2>@Model.TotalItems bất động sản phù hợp</h2><span>Trang @Model.Page / @Model.TotalPages · Mới nhất trước</span></div>
+    <div class="property-grid">
+        @foreach (var property in Model.Items)
+        {
+            <partial name="_PropertyCard" model="property" />
+        }
+        @if (!Model.Items.Any())
+        {
+            <div class="empty-state"><svg class="icon" aria-hidden="true"><use href="#i-search" /></svg><h3>Chưa tìm thấy kết quả phù hợp</h3><p>Thử thay đổi khu vực, loại hình hoặc khoảng giá.</p><a asp-action="Index" class="btn btn-default">Xóa bộ lọc</a></div>
+        }
+    </div>
+    <nav class="pagination" aria-label="Phân trang bất động sản">
+        @for (var pageNumber = 1; pageNumber <= Model.TotalPages; pageNumber++)
+        {
+            <a class="btn btn-default @(pageNumber == Model.Page ? "current" : "")" aria-current="@(pageNumber == Model.Page ? "page" : null)" asp-route-page="@pageNumber" asp-route-keyword="@Model.Keyword" asp-route-typeId="@Model.TypeId" asp-route-locationId="@Model.LocationId" asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice">@pageNumber</a>
+        }
+    </nav>
+</div>

@@ -1,0 +1,23 @@
+@model IEnumerable<RealEstateWeb.Models.Property>
+@{ ViewData["Title"] = "Tổng quan"; }
+<div class="rh-page-head">
+    <div><span class="eyebrow">Không gian làm việc</span><h3>Tổng quan hệ thống</h3><p>Theo dõi tin đăng và quản lý dữ liệu của bạn.</p></div>
+    <a asp-area="Admin" asp-controller="Properties" asp-action="Create" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>Thêm tin đăng</a>
+</div>
+<div class="stats-grid">
+    <div class="stat-card"><div class="stat-top">Tổng tin đăng<span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-building" /></svg></span></div><div class="stat-number">@ViewBag.Total</div><small>Tất cả bất động sản</small></div>
+    <div class="stat-card"><div class="stat-top">Đang chờ duyệt<span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-clock" /></svg></span></div><div class="stat-number">@ViewBag.Pending</div><small>Cần được kiểm tra</small></div>
+    <div class="stat-card"><div class="stat-top">Đã phê duyệt<span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-shield" /></svg></span></div><div class="stat-number">@ViewBag.Approved</div><small>Hiển thị trên website</small></div>
+    <div class="stat-card"><div class="stat-top">Người dùng<span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-user" /></svg></span></div><div class="stat-number">@ViewBag.Users</div><small>Tài khoản thành viên</small></div>
+</div>
+<div class="admin-welcome"><div><h4>Chức năng cá nhân: Quản lý bất động sản.</h4><p>Thêm, xem chi tiết, sửa, xóa và tìm kiếm tin bất động sản.</p></div><a class="btn btn-default" asp-area="Admin" asp-controller="Properties" asp-action="Index">Quản lý bất động sản <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></div>
+<section class="rh-card">
+    <div class="rh-page-head"><div><h4>Tin đăng mới nhất</h4><p>Những cập nhật gần đây trong hệ thống.</p></div><a asp-area="Admin" asp-controller="Properties" asp-action="Index" class="btn btn-default btn-sm">Xem tất cả <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></div>
+    <div class="table-responsive"><table class="table rh-table"><thead><tr><th>Bất động sản</th><th>Loại hình</th><th>Người đăng</th><th>Giá niêm yết</th><th>Trạng thái</th></tr></thead><tbody>
+        @foreach (var property in Model)
+        {
+            <tr><td><a class="listing-cell" asp-area="Admin" asp-controller="Properties" asp-action="Edit" asp-route-id="@property.PropertyId"><img src="@property.MainImage" alt="" /><span><strong>@property.Title</strong><small>@property.CreatedAt.ToString("dd/MM/yyyy")</small></span></a></td><td>@property.PropertyType?.TypeName</td><td>@property.User?.FullName</td><td><strong><partial name="~/Views/Shared/_Price.cshtml" model="property.Price" /></strong></td><td><partial name="~/Views/Shared/_StatusBadge.cshtml" model="property.Status" /></td></tr>
+        }
+        @if (!Model.Any()) { <tr><td colspan="5" class="text-center muted">Chưa có tin đăng. Thêm bất động sản đầu tiên để bắt đầu.</td></tr> }
+    </tbody></table></div>
+</section>

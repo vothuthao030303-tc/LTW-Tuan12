@@ -1,0 +1,73 @@
+@model RealEstateWeb.ViewModels.PropertyDetailViewModel
+@{
+    var property = Model.Property;
+    var mainImage = Model.GalleryUrls.FirstOrDefault() ?? "/user/images/hotel_feture_1.jpg";
+    var name = string.IsNullOrWhiteSpace(property.User?.FullName) ? "Người đăng tin" : property.User.FullName;
+    ViewData["Title"] = property.Title;
+}
+<div class="container property-detail-page">
+    <nav class="breadcrumb" aria-label="Đường dẫn"><a asp-controller="Home" asp-action="Index">Trang chủ</a><span>/</span><a asp-action="Index">Bất động sản</a><span>/</span><span>Chi tiết tin đăng</span></nav>
+    <header class="listing-heading">
+        <div>
+            <div class="listing-tags"><span class="status-badge">@property.PropertyType?.TypeName</span>@if (property.IsFeatured) { <span class="status-badge rh-approved">Tin nổi bật</span> }</div>
+            <h1>@property.Title</h1>
+            <p class="listing-address"><svg class="icon" aria-hidden="true"><use href="#i-map" /></svg>@property.Address</p>
+        </div>
+        <div class="listing-reference"><span>Mã tin RH-@property.PropertyId.ToString("D4")</span><span>Cập nhật @((property.UpdatedAt ?? property.CreatedAt).ToString("dd/MM/yyyy"))</span></div>
+    </header>
+    <div class="property-gallery" data-property-gallery>
+        <div class="gallery-main-wrap">
+            <img class="gallery-main-image" data-gallery-main src="@mainImage" alt="Ảnh @property.Title" width="1100" height="700" fetchpriority="high" />
+            <a class="gallery-open" data-gallery-open href="@mainImage" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-image" /></svg>Xem ảnh lớn · @Model.GalleryUrls.Count ảnh</a>
+        </div>
+        @if (Model.GalleryUrls.Count > 1)
+        {
+            <div class="gallery-thumbnails" aria-label="Các ảnh của bất động sản">
+                @for (var index = 0; index < Model.GalleryUrls.Count; index++)
+                {
+                    <a class="gallery-thumb @(index == 0 ? "is-selected" : "")" data-gallery-thumb href="@Model.GalleryUrls[index]" target="_blank" rel="noopener" aria-label="Xem ảnh @(index + 1) của @property.Title" aria-current="@(index == 0 ? "true" : null)"><img src="@Model.GalleryUrls[index]" alt="Ảnh @(index + 1) của @property.Title" loading="lazy" width="350" height="220" /></a>
+                }
+            </div>
+        }
+    </div>
+    <div class="detail-page-layout">
+        <div class="listing-main-content">
+            <nav class="listing-section-nav" aria-label="Nội dung tin"><a href="#overview">Tổng quan</a><a href="#description">Mô tả</a><a href="#location">Địa chỉ</a>@if (Model.RelatedProperties.Any()) { <a href="#related">Tin liên quan</a> }</nav>
+            <section class="listing-section" id="overview">
+                <span class="eyebrow">Những thông tin cần biết</span><h2>Tổng quan bất động sản</h2>
+                <div class="listing-facts">
+                    <div><svg class="icon" aria-hidden="true"><use href="#i-area" /></svg><span>Diện tích<strong>@property.Area.ToString("0.##") m²</strong></span></div>
+                    <div><svg class="icon" aria-hidden="true"><use href="#i-bed" /></svg><span>Phòng ngủ<strong>@property.Bedrooms phòng</strong></span></div>
+                    <div><svg class="icon" aria-hidden="true"><use href="#i-bath" /></svg><span>Phòng tắm<strong>@property.Bathrooms phòng</strong></span></div>
+                </div>
+                <dl class="listing-specifications"><dt>Mã tin</dt><dd>RH-@property.PropertyId.ToString("D4")</dd><dt>Loại bất động sản</dt><dd>@property.PropertyType?.TypeName</dd><dt>Khu vực</dt><dd>@property.Location?.District</dd><dt>Tỉnh/thành phố</dt><dd>@property.Location?.City</dd><dt>Ngày đăng</dt><dd>@property.CreatedAt.ToString("dd/MM/yyyy")</dd></dl>
+            </section>
+            <section class="listing-section" id="description"><span class="eyebrow">Không gian & đặc điểm</span><h2>Mô tả bất động sản</h2><div class="listing-description">@property.Description</div></section>
+            <section class="listing-section" id="location"><h2>Địa chỉ bất động sản</h2><div class="listing-location"><svg class="icon" aria-hidden="true"><use href="#i-map" /></svg><div><strong>@property.Address</strong><p>@property.Location?.District · @property.Location?.City</p></div></div></section>
+        </div>
+        <aside class="listing-contact-aside" aria-label="Giá và người liên hệ">
+            <div class="listing-contact-card">
+                <span class="eyebrow">Giá niêm yết</span><div class="property-price"><partial name="~/Views/Shared/_Price.cshtml" model="property.Price" /></div><p class="price-explanation">Rê chuột lên giá để xem đầy đủ số tiền.</p><hr />
+                <div class="contact-person"><span class="contact-avatar" aria-hidden="true">@(name[..1].ToUpper())</span><div><strong>@name</strong><small>Người liên hệ của tin đăng</small></div></div>
+                @if (!string.IsNullOrWhiteSpace(property.User?.Phone))
+                {
+                    <a class="btn btn-primary btn-block" href="tel:@property.User.Phone">Liên hệ · @property.User.Phone</a>
+                }
+                else
+                {
+                    <div class="contact-unavailable">Người đăng chưa cung cấp số điện thoại.</div>
+                }
+                <button class="btn btn-default btn-block copy-listing" data-copy-listing type="button">Sao chép liên kết tin</button><p class="copy-feedback" data-copy-feedback role="status" aria-live="polite"></p>
+                <p class="contact-tip">Trao đổi trực tiếp với người đăng để xác nhận thông tin và lịch xem bất động sản.</p>
+            </div>
+            <a class="back-to-listings" asp-action="Index">← Quay lại danh sách bất động sản</a>
+        </aside>
+    </div>
+    @if (Model.RelatedProperties.Any())
+    {
+        <section class="related-listings" id="related"><div class="section-head"><div><span class="eyebrow">Thêm lựa chọn cho bạn</span><h2>Bất động sản liên quan</h2><p>Cùng loại hình hoặc cùng khu vực với tin bạn đang xem.</p></div><a asp-action="Index" asp-route-typeId="@property.PropertyTypeId">Xem thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a></div><div class="property-grid">@foreach (var related in Model.RelatedProperties) { <partial name="_PropertyCard" model="related" /> }</div></section>
+    }
+</div>
+@section Scripts {
+    <script src="~/js/property-details.js" asp-append-version="true" defer></script>
+}

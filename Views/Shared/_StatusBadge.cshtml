@@ -1,0 +1,23 @@
+@model string
+@{
+    var label = Model switch
+    {
+        "Approved" => "Đã duyệt",
+        "Pending" => "Chờ duyệt",
+        "Rejected" => "Từ chối",
+        "Sold" => "Đã bán",
+        "Active" => "Hoạt động",
+        "Inactive" => "Ngừng hoạt động",
+        "Locked" => "Đã khóa",
+        _ => Model
+    };
+    var style = Model switch
+    {
+        "Approved" or "Active" => "rh-approved",
+        "Pending" => "rh-pending",
+        "Rejected" or "Locked" => "rh-rejected",
+        "Sold" => "rh-sold",
+        _ => ""
+    };
+}
+<span class="rh-badge @style">@label</span>

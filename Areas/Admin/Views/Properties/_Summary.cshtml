@@ -1,0 +1,16 @@
+@model RealEstateWeb.Models.Property
+<dl class="detail-fields">
+    <dt>Mã</dt><dd>@Model.PropertyId</dd>
+    <dt>Tiêu đề</dt><dd>@Model.Title</dd>
+    <dt>Giá</dt><dd><partial name="~/Views/Shared/_Price.cshtml" model="Model.Price" /></dd>
+    <dt>Diện tích</dt><dd>@Model.Area.ToString("0.##") m²</dd>
+    <dt>Địa chỉ</dt><dd>@Model.Address</dd>
+    <dt>Loại</dt><dd>@Model.PropertyType?.TypeName</dd>
+    <dt>Khu vực</dt><dd>@Model.Location?.District - @Model.Location?.City</dd>
+    <dt>Phòng ngủ / Phòng tắm</dt><dd>@Model.Bedrooms / @Model.Bathrooms</dd>
+    <dt>Người liên hệ</dt><dd>@Model.User?.FullName @Model.User?.Phone</dd>
+    <dt>Trạng thái</dt><dd><partial name="~/Views/Shared/_StatusBadge.cshtml" model="Model.Status" /></dd>
+    <dt>Ngày tạo</dt><dd>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt>Mô tả</dt><dd class="description">@Model.Description</dd>
+    <dt>Hình ảnh</dt><dd><img class="preview-image" src="@(Model.MainImage ?? "/user/images/hotel_feture_1.jpg")" alt="Ảnh bất động sản" /></dd>
+</dl>

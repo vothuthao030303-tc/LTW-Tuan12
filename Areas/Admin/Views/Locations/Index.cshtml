@@ -1,0 +1,50 @@
+@model IEnumerable<RealEstateWeb.Models.Location>
+@{
+    ViewData["Title"] = "Quản lý khu vực";
+}
+<div class="rh-page-head">
+    <div>
+        <h3>Quản lý khu vực</h3>
+        <p>Tổ chức địa điểm và quản lý các khu vực có bất động sản.</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>Thêm khu vực</a>
+</div>
+<div class="rh-card">
+    <form asp-action="Index" method="get" class="rh-location-search">
+        <label for="keyword">Tìm khu vực</label>
+        <input id="keyword" name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Tỉnh/thành phố hoặc khu vực" />
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        <a asp-action="Index" class="btn btn-default">Xem tất cả</a>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã khu vực</th>
+                    <th>Tỉnh/thành phố</th>
+                    <th>Khu vực</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (!Model.Any())
+            {
+                <tr><td colspan="4" class="text-center">Không tìm thấy khu vực phù hợp.</td></tr>
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.LocationId</td>
+                    <td>@item.City</td>
+                    <td>@(item.District ?? "—")</td>
+                    <td class="rh-location-actions">
+                        <a asp-action="Details" asp-route-id="@item.LocationId" class="btn btn-default">Chi tiết</a>
+                        <a asp-action="Edit" asp-route-id="@item.LocationId" class="btn btn-primary">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.LocationId" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

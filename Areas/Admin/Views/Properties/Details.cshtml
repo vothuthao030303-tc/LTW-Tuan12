@@ -1,0 +1,10 @@
+@model RealEstateWeb.Models.Property
+@{ ViewData["Title"] = "Chi tiết bất động sản"; }
+<h1>Chi tiết bất động sản</h1>
+<div class="detail-card">
+    <partial name="_Summary" model="Model" />
+</div>
+<div class="page-actions">
+    <a asp-action="Edit" asp-route-id="@Model.PropertyId" class="btn btn-warning">Sửa thông tin</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Quay lại danh sách</a>
+</div>

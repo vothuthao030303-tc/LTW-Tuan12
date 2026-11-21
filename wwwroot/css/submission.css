@@ -1,0 +1,40 @@
+:root {
+    --brand: #21624d;
+    --brand-dark: #154c3a;
+    --brand-soft: #eaf3ed;
+    --ink: #1c3028;
+    --muted: #738079;
+    --line: #e3e9e4;
+    --surface: #ffffff;
+    --background: #f5f7f4;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--background); font: 16px/1.6 "Segoe UI", Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { color: var(--brand-dark); }
+.container { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
+.site-header { background: white; border-bottom: 1px solid var(--line); }
+.simple-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; padding: 14px 0; }
+.simple-nav > a { color: var(--ink); }.site-name { display: flex; align-items: center; gap: 9px; font-size: 20px; font-weight: 750; }
+.brand-mark { display: grid; place-items: center; width: 36px; height: 36px; color: white; background: var(--brand); border-radius: 11px 11px 11px 3px; font-weight: 800; }
+.nav-link { font-size: 14px; font-weight: 600; color: #68786c !important; }.nav-link:hover { color: var(--brand) !important; }
+.main-content { padding-top: 32px; padding-bottom: 36px; flex: 1; min-width: 0; }
+h1 { font-size: clamp(28px, 3vw, 38px); font-weight: 700; margin: 0 0 22px; color: var(--ink); letter-spacing: -.03em; }
+h2 { font-size: 23px; font-weight: 650; margin: 24px 0 15px; }
+p { margin: 0 0 16px; } small { color: var(--muted); font-size: 13px; }
+.table-responsive { overflow-x: auto; }.table { width: 100%; border-collapse: collapse; margin-bottom: 18px; background: white; border-radius: 12px; overflow: hidden; }.table th,.table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }.table th { font-weight: 650; color: var(--brand-dark); background: var(--brand-soft); }.table tbody tr:nth-child(odd) { background: #fbfcfb; }.table-image { width: 85px; height: 62px; object-fit: cover; border-radius: 7px; }
+.actions { white-space: nowrap; }.action-buttons { display: flex; gap: 6px; flex-wrap: nowrap; }.money { white-space: nowrap; }
+.btn { border-radius: 7px; font-weight: 600; text-decoration: none !important; }.btn-primary { background: var(--brand) !important; border-color: var(--brand) !important; color: white !important; }.btn-primary:hover { background: var(--brand-dark) !important; border-color: var(--brand-dark) !important; }.btn-info { background: #eaf3ed !important; border-color: #d1e4d8 !important; color: var(--brand-dark) !important; }.btn-warning { color: #664c10 !important; }.btn-sm { padding: 5px 10px; font-size: 12px; }
+.search-form { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }.search-form input { max-width: 350px; }.search-form select { max-width: 240px; }
+input,select,textarea,button { font: inherit; } input:not([type="checkbox"]):not([type="hidden"]),select,textarea { display: block; width: 100%; padding: 8px 10px; color: var(--ink); border: 1px solid #ced8d0; border-radius: 7px; background: white; } textarea { resize: vertical; } input[type="checkbox"] { accent-color: var(--brand); }
+label { display: block; margin-bottom: 6px; font-weight: 600; color: #40534a; }.form-group { margin-bottom: 16px; }.form-group p { margin: 7px 0; }.edit-form { max-width: 850px; }.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }.full-width { grid-column: 1 / -1; }.detail-fields { display: grid; grid-template-columns: 190px minmax(0,1fr); gap: 13px 20px; max-width: 950px; margin: 0 0 25px; }.detail-fields dt { font-weight: 650; color: var(--brand-dark); }.detail-fields dd { margin: 0; overflow-wrap: anywhere; }.description { white-space: pre-line; }.preview-image { max-width: 280px; width: 100%; max-height: 190px; object-fit: cover; border-radius: 9px; }.detail-card { background: white; padding: 24px; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 24px #12351f08; }.page-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+.pagination { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 18px 0; }.pagination a { padding: 7px 12px; border: 1px solid var(--line); border-radius: 7px; background: white; }
+.home-welcome { background: white; border: 1px solid var(--line); border-radius: 18px; padding: clamp(25px, 5vw, 55px); box-shadow: 0 12px 36px rgba(25,47,36,.05); }.eyebrow { display: block; font-size: 11px; font-weight: 750; letter-spacing: .15em; color: var(--brand); margin-bottom: 12px; }.home-welcome h1 { margin-bottom: 12px; }.brand-text { color: var(--brand); }.home-welcome p { color: var(--muted); max-width: 680px; }.home-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }.btn-outline-primary { color: var(--brand) !important; border-color: var(--brand) !important; }.btn-outline-primary:hover { background: var(--brand-soft) !important; color: var(--brand-dark) !important; }
+.alert { padding: 12px 16px; margin-bottom: 20px; border-radius: 8px; }.alert-success { color: #0f5132; background: #e7f3ec; }.alert-danger { color: #842029; background: #f8d7da; }
+.text-danger,.field-validation-error { color: #b34335; font-size: 14px; }.validation-summary-valid,.field-validation-valid { display: none; }.validation-summary-errors ul { padding-left: 20px; }.input-validation-error { border-color: #dc3545 !important; }
+.site-footer { padding: 18px 0; background: white; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+@media(max-width: 768px) { .simple-nav { gap: 12px; }.detail-fields { grid-template-columns: 1fr; gap: 5px; }.detail-fields dd { margin-bottom: 12px; }.form-grid { grid-template-columns: 1fr; }.home-actions { flex-direction: column; align-items: stretch; }.action-buttons { flex-wrap: wrap; } }
+
+/* Bang trang chu: vien day du theo bang tieu chuan */
+.home-welcome .table.table-bordered { border: 1px solid #ced8d0 !important; border-collapse: collapse !important; border-radius: 0 !important; overflow: visible !important; }
+.home-welcome .table.table-bordered th, .home-welcome .table.table-bordered td { border: 1px solid #ced8d0 !important; }

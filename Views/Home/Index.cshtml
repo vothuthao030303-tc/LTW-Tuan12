@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<section class="home-welcome home-profile">
+    <div class="student-table-wrap">
+        <div class="table-responsive">
+            <table class="table student-info-table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">MSSV</th>
+                        <th scope="col">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="student-name">Võ Thu Thảo</span>
+                        </td>
+                        <td>
+                            <span class="student-id">2001240454</span>
+                        </td>
+                        <td>
+                            <a asp-area="Admin"
+                               asp-controller="Properties"
+                               asp-action="Index"
+                               class="btn btn-primary btn-sm student-action">
+                                Quản lý bất động sản
+                                <span aria-hidden="true">→</span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

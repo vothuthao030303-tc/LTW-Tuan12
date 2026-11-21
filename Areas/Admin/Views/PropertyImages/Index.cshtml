@@ -1,0 +1,18 @@
+@model IEnumerable<RealEstateWeb.Models.PropertyImage>
+@{ ViewData["Title"] = "Quản lý hình ảnh"; }
+<div class="rh-page-head"><h3>Quản lý hình ảnh</h3><a asp-action="Create" class="btn btn-primary">Thêm hình ảnh</a></div>
+<div class="rh-card">
+    <form method="get"><select name="propertyId" asp-items="ViewBag.PropertyId"><option value="">Tất cả bất động sản</option></select><button class="btn btn-primary">Lọc</button></form>
+    <div class="table-responsive"><table class="table rh-table">
+        <thead><tr><th>Mã</th><th>Ảnh</th><th>Bất động sản</th><th>Ảnh đại diện</th><th>Thao tác</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td>@item.PropertyImageId</td><td><img src="@item.ImageUrl" alt="Ảnh bất động sản" /></td><td>@item.Property?.Title</td><td>@(item.IsMain ? "Có" : "Không")</td><td>
+                <a asp-action="Edit" asp-route-id="@item.PropertyImageId" class="btn btn-default">Sửa</a>
+                <form asp-action="Delete" asp-route-id="@item.PropertyImageId" method="post" style="display:inline" onsubmit="return confirm('Xóa bản ghi ảnh này?');"><button class="btn btn-danger">Xóa</button></form>
+            </td></tr>
+        }
+        </tbody>
+    </table></div>
+</div>

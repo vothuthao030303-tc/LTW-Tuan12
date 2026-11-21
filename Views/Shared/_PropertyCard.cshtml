@@ -1,0 +1,21 @@
+@model RealEstateWeb.Models.Property
+<article class="property-card">
+    <a class="property-media" asp-area="" asp-controller="Property" asp-action="Details" asp-route-id="@Model.PropertyId" style="display:block">
+        <img src="@(Model.MainImage ?? "/user/images/hotel_feture_1.jpg")" alt="Ảnh minh họa @Model.Title" loading="lazy" width="600" height="400" />
+        <span class="badge-status @(Model.IsFeatured ? "featured-tag" : "")">@(Model.IsFeatured ? "Nổi bật" : Model.PropertyType?.TypeName ?? "Bất động sản")</span>
+    </a>
+    <div class="property-body">
+        <span class="card-type">@Model.PropertyType?.TypeName</span>
+        <h3><a asp-area="" asp-controller="Property" asp-action="Details" asp-route-id="@Model.PropertyId">@Model.Title</a></h3>
+        <p class="property-address"><svg class="icon" aria-hidden="true"><use href="#i-map" /></svg>@Model.Address</p>
+        <div class="property-meta">
+            <span><svg class="icon" aria-hidden="true"><use href="#i-area" /></svg>@Model.Area.ToString("0.##") m²</span>
+            <span><svg class="icon" aria-hidden="true"><use href="#i-bed" /></svg>@Model.Bedrooms phòng ngủ</span>
+            <span><svg class="icon" aria-hidden="true"><use href="#i-bath" /></svg>@Model.Bathrooms WC</span>
+        </div>
+        <div class="card-price-row">
+            <div class="property-price"><partial name="~/Views/Shared/_Price.cshtml" model="Model.Price" /></div>
+            <a asp-area="" asp-controller="Property" asp-action="Details" asp-route-id="@Model.PropertyId" aria-label="Xem chi tiết @Model.Title"><svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+        </div>
+    </div>
+</article>

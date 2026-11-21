@@ -1,0 +1,36 @@
+@model RealEstateWeb.Models.Location
+@{
+    ViewData["Title"] = "Chi tiết khu vực";
+}
+<div class="rh-page-head"><h3>Chi tiết khu vực</h3></div>
+<div class="rh-card">
+    <partial name="_Summary" model="Model" />
+    <a asp-action="Edit" asp-route-id="@Model.LocationId" class="btn btn-primary">Sửa khu vực</a>
+    <a asp-action="Index" class="btn btn-default">Quay lại danh sách</a>
+</div>
+<div class="rh-card">
+    <h4>Bất động sản thuộc khu vực</h4>
+    @if (Model.Properties.Count == 0)
+    {
+        <p>Khu vực chưa có bất động sản.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead><tr><th>Mã</th><th>Tiêu đề</th><th>Giá</th><th>Trạng thái</th></tr></thead>
+                <tbody>
+                @foreach (var property in Model.Properties.OrderByDescending(item => item.CreatedAt))
+                {
+                    <tr>
+                        <td>@property.PropertyId</td>
+                        <td><a asp-area="Admin" asp-controller="Properties" asp-action="Edit" asp-route-id="@property.PropertyId">@property.Title</a></td>
+                        <td><partial name="~/Views/Shared/_Price.cshtml" model="property.Price" /></td>
+                        <td><partial name="~/Views/Shared/_StatusBadge.cshtml" model="property.Status" /></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

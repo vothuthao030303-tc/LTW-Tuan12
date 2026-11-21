@@ -1,0 +1,11 @@
+@model RealEstateWeb.Models.Location
+<dl class="row">
+    <dt class="col-md-3">@Html.DisplayNameFor(model => model.LocationId)</dt>
+    <dd class="col-md-9">@Model.LocationId</dd>
+    <dt class="col-md-3">@Html.DisplayNameFor(model => model.City)</dt>
+    <dd class="col-md-9">@Model.City</dd>
+    <dt class="col-md-3">@Html.DisplayNameFor(model => model.District)</dt>
+    <dd class="col-md-9">@(Model.District ?? "—")</dd>
+    <dt class="col-md-3">Số bất động sản liên quan</dt>
+    <dd class="col-md-9">@Model.Properties.Count</dd>
+</dl>

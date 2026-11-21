@@ -1,0 +1,10 @@
+@model RealEstateWeb.ViewModels.AdminUserViewModel
+<div asp-validation-summary="All" class="text-danger"></div>
+<input asp-for="UserId" type="hidden" />
+<div class="form-group"><label asp-for="FullName">Họ tên</label><input asp-for="FullName" class="form-control" /></div>
+<div class="form-group"><label asp-for="Email">Email</label><input asp-for="Email" class="form-control" /></div>
+<div class="form-group"><label asp-for="Phone">Điện thoại</label><input asp-for="Phone" class="form-control" /></div>
+<div class="form-group"><label asp-for="Address">Địa chỉ</label><input asp-for="Address" class="form-control" /></div>
+<div class="form-group"><label asp-for="Role">Quyền</label><select asp-for="Role" class="form-control"><option value="User">User</option><option value="Admin">Admin</option></select></div>
+<div class="form-group"><label asp-for="Status">Trạng thái</label><select asp-for="Status" class="form-control"><option value="Active">Hoạt động</option><option value="Inactive">Ngừng hoạt động</option><option value="Locked">Đã khóa</option></select></div>
+<div class="form-group"><label asp-for="NewPassword">Mật khẩu mới</label><input asp-for="NewPassword" class="form-control" autocomplete="new-password" value="" /><p>8–128 ký tự. Khi sửa, để trống để giữ mật khẩu hiện tại.</p></div>

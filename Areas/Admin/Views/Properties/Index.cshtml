@@ -1,0 +1,49 @@
+@model RealEstateWeb.ViewModels.AdminPropertyListViewModel
+@{
+    ViewData["Title"] = "Quản lý bất động sản";
+    var statuses = new[]
+    {
+        new { Value = "Pending", Label = "Chờ duyệt" },
+        new { Value = "Approved", Label = "Đã duyệt" },
+        new { Value = "Rejected", Label = "Từ chối" },
+        new { Value = "Sold", Label = "Đã bán" }
+    };
+}
+<h1>Quản lý bất động sản</h1>
+<p><a asp-action="Create" class="btn btn-primary">+ Thêm bất động sản mới</a></p>
+<form asp-action="Index" method="get" class="search-form">
+    <input name="keyword" value="@Model.Keyword" placeholder="Tìm theo tiêu đề, địa chỉ" aria-label="Từ khóa" />
+    <select name="status" aria-label="Trạng thái"><option value="">-- Tất cả trạng thái --</option>@foreach (var status in statuses) { <option value="@status.Value" selected="@(Model.Status == status.Value)">@status.Label</option> }</select>
+    <button type="submit" class="btn btn-primary">Tìm kiếm</button><a asp-action="Index" class="btn btn-default">Xem tất cả</a>
+</form>
+<div class="table-responsive">
+    <table class="table">
+        <thead><tr><th>Mã</th><th>Hình ảnh</th><th>Tiêu đề / Địa chỉ</th><th>Loại / Khu vực</th><th>Giá / Diện tích</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.PropertyId</td>
+                <td><img class="table-image" src="@(item.MainImage ?? "/user/images/hotel_feture_1.jpg")" alt="Ảnh bất động sản" /></td>
+                <td>@item.Title<br /><small>@item.Address</small></td>
+                <td>@item.PropertyType?.TypeName<br /><small>@item.Location?.District</small></td>
+                <td><partial name="~/Views/Shared/_Price.cshtml" model="item.Price" /><br /><small>@item.Area.ToString("0.##") m²</small></td>
+                <td><partial name="~/Views/Shared/_StatusBadge.cshtml" model="item.Status" /></td>
+                <td class="actions">
+                    <div class="action-buttons">
+                        <a asp-action="Details" asp-route-id="@item.PropertyId" class="btn btn-info btn-sm">Xem</a>
+                        <a asp-action="Edit" asp-route-id="@item.PropertyId" class="btn btn-warning btn-sm">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.PropertyId" class="btn btn-danger btn-sm">Xóa</a>
+                    </div>
+                </td>
+            </tr>
+        }
+        @if (!Model.Items.Any()) { <tr><td colspan="7">Không tìm thấy bất động sản.</td></tr> }
+        </tbody>
+    </table>
+</div>
+<div class="pagination">
+    <span>Trang @Model.Page / @Model.TotalPages - @Model.TotalItems kết quả</span>
+    @if (Model.Page > 1) { <a asp-route-page="@(Model.Page - 1)" asp-route-keyword="@Model.Keyword" asp-route-status="@Model.Status">Trang trước</a> }
+    @if (Model.Page < Model.TotalPages) { <a asp-route-page="@(Model.Page + 1)" asp-route-keyword="@Model.Keyword" asp-route-status="@Model.Status">Trang sau</a> }
+</div>

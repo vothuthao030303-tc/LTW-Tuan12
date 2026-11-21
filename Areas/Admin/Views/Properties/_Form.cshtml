@@ -1,0 +1,23 @@
+@model RealEstateWeb.Models.Property
+@{
+    var isCreating = string.Equals(ViewContext.RouteData.Values["action"]?.ToString(), "Create", StringComparison.OrdinalIgnoreCase);
+}
+<div asp-validation-summary="All" class="text-danger"></div>
+<div class="form-grid">
+    <div class="form-group full-width"><label asp-for="Title">Tiêu đề</label><input asp-for="Title" /><span asp-validation-for="Title" class="text-danger"></span></div>
+    <div class="form-group"><label asp-for="Price">Giá (VND)</label><input asp-for="Price" /><span asp-validation-for="Price" class="text-danger"></span></div>
+    <div class="form-group"><label asp-for="Area">Diện tích (m²)</label><input asp-for="Area" /><span asp-validation-for="Area" class="text-danger"></span></div>
+    <div class="form-group full-width"><label asp-for="Address">Địa chỉ</label><input asp-for="Address" /></div>
+    <div class="form-group"><label asp-for="PropertyTypeId">Loại bất động sản</label><select asp-for="PropertyTypeId" asp-items="ViewBag.PropertyTypeId"><option value="0">-- Chọn loại --</option></select></div>
+    <div class="form-group"><label asp-for="LocationId">Khu vực</label><select asp-for="LocationId" asp-items="ViewBag.LocationId"><option value="0">-- Chọn khu vực --</option></select></div>
+    <div class="form-group"><label asp-for="Bedrooms">Phòng ngủ</label><input asp-for="Bedrooms" /></div>
+    <div class="form-group"><label asp-for="Bathrooms">Phòng tắm</label><input asp-for="Bathrooms" /></div>
+    <div class="form-group"><label asp-for="UserId">Người liên hệ</label><select asp-for="UserId" asp-items="ViewBag.UserId"><option value="0">-- Chọn người liên hệ --</option></select></div>
+    <div class="form-group">
+        @if (isCreating) { <label>Trạng thái</label><p>Đã duyệt (mặc định)</p> }
+        else { <label asp-for="Status">Trạng thái</label><select asp-for="Status"><option value="Pending">Chờ duyệt</option><option value="Approved">Đã duyệt</option><option value="Rejected">Từ chối</option><option value="Sold">Đã bán</option></select> }
+    </div>
+    <div class="form-group full-width"><label asp-for="Description">Mô tả</label><textarea asp-for="Description" rows="4"></textarea></div>
+    <div class="form-group full-width"><label for="image">Ảnh đại diện</label><input id="image" name="image" type="file" accept=".jpg,.jpeg,.png,.webp" /><small>JPG, PNG, WebP; tối đa 5 MB.</small></div>
+    <div class="form-group full-width"><label><input asp-for="IsFeatured" /> Tin nổi bật</label></div>
+</div>

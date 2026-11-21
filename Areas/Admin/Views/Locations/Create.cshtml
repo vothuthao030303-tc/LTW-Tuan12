@@ -1,0 +1,13 @@
+@model RealEstateWeb.Models.Location
+@{
+    ViewData["Title"] = "Thêm khu vực";
+}
+<div class="rh-page-head"><h3>Thêm khu vực</h3></div>
+<div class="rh-card">
+    <p>Mã khu vực được SQL Server tự sinh sau khi lưu.</p>
+    <form asp-action="Create" method="post">
+        <partial name="_Form" model="Model" />
+        <button type="submit" class="btn btn-primary">Lưu khu vực</button>
+        <a asp-action="Index" class="btn btn-default">Quay lại danh sách</a>
+    </form>
+</div>

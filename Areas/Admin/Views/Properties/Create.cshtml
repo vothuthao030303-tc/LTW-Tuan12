@@ -1,0 +1,7 @@
+@model RealEstateWeb.Models.Property
+@{ ViewData["Title"] = "Thêm bất động sản"; }
+<h1>Thêm bất động sản</h1>
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="edit-form">
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Lưu</button> <a asp-action="Index">Quay lại danh sách</a>
+</form>

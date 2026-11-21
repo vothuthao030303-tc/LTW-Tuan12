@@ -1,0 +1,9 @@
+@model RealEstateWeb.Models.Property
+@{ ViewData["Title"] = "Xóa bất động sản"; }
+<h1>Xóa bất động sản</h1>
+<p>Bạn có chắc muốn xóa bất động sản này?</p>
+<partial name="_Summary" model="Model" />
+<form asp-action="Delete" asp-route-id="@Model.PropertyId" method="post">
+    <input type="hidden" name="id" value="@Model.PropertyId" />
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button> <a asp-action="Index">Hủy</a>
+</form>

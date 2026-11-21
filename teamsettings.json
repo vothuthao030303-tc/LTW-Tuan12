@@ -1,0 +1,14 @@
+{
+  "Team": {
+    "ClassName": "",
+    "GroupName": "",
+    "Members": [
+      {
+        "FullName": "Võ Thu Thảo",
+        "StudentId": "2001240454",
+        "Responsibility": "Quản lý bất động sản — CRUD bảng Properties",
+        "Controller": "Properties"
+      }
+    ]
+  }
+}
